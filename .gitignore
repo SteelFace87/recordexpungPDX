@@ -132,3 +132,6 @@ venv.bak/
 
 # PyCharm editors
 .idea/
+
+# cli results folder
+results/
