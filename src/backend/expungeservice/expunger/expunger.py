@@ -1,6 +1,6 @@
 from expungeservice.expunger.analyzers.type_analyzer import TypeAnalyzer
 from expungeservice.expunger.analyzers.time_analyzer import TimeAnalyzer
-
+import logging
 
 class Expunger:
     """
@@ -46,19 +46,30 @@ class Expunger:
             return False
 
         self._create_charge_list()
-        self._categorize_charges()
-        self._set_most_recent_dismissal()
-        self._set_most_recent_convictions()
-        self._set_num_acquittals()
-        self._assign_most_recent_charge()
+        try:
+            self._categorize_charges()
+            self._set_most_recent_dismissal()
+            self._set_most_recent_convictions()
+            self._set_num_acquittals()
+            self._assign_most_recent_charge()
+        except Exception:
+            logging.exception(f" During time analysis setup")
+
         self._type_analyzer.evaluate(self._charges)
-        self._time_analyzer = TimeAnalyzer(most_recent_conviction=self._most_recent_conviction,
-                                           second_most_recent_conviction=self._second_most_recent_conviction,
-                                           most_recent_dismissal=self._most_recent_dismissal,
-                                           num_acquittals=self._num_acquittals,
-                                           class_b_felonies=self._type_analyzer.class_b_felonies,
-                                           most_recent_charge=self._most_recent_charge)
-        self._time_analyzer.evaluate(self._charges)
+        self.errors.extend(self._type_analyzer.errors)
+
+        try:
+            self._time_analyzer = TimeAnalyzer(most_recent_conviction=self._most_recent_conviction,
+                                               second_most_recent_conviction=self._second_most_recent_conviction,
+                                               most_recent_dismissal=self._most_recent_dismissal,
+                                               num_acquittals=self._num_acquittals,
+                                               class_b_felonies=self._type_analyzer.class_b_felonies,
+                                               most_recent_charge=self._most_recent_charge)
+            self._time_analyzer.evaluate(self._charges)
+        except Exception:
+            logging.exception(f" During time analysis")
+            self.errors.append("Warning: There was an error during the time analysis")
+
         return True
 
     def _open_cases(self):
