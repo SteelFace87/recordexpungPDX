@@ -1,11 +1,19 @@
+import logging
+
 class TypeAnalyzer:
 
     def __init__(self):
+        self.errors = []
         self.class_b_felonies = []
 
     def evaluate(self, charges):
         for charge in charges:
-            self.__evaluate(charge)
+            try:
+                self.__evaluate(charge)
+            except Exception:
+                self.errors.append(f"Error while analyzing type for charge: {charge.name} in case: {charge.case()().case_number}")
+                logging.exception(f" While evaluating charge type: {charge.case()().case_number} : {charge.name}")
+
 
     def __evaluate(self, charge):
         if charge.acquitted():
