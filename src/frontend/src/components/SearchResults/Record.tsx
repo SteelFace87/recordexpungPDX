@@ -43,40 +43,63 @@ export const Record: React.FC<RecordProps> = ({
   }
 
   return (
-    <section className="flex">
-      <ul className="list pl0 w5">
-        <li>
-          <p>{Eligibility}</p>
+    <section className="flex bb w-100 mb2 pb2" style={{ position: 'relative' }}>
+      <section
+        className="h-100 w1"
+        style={{
+          position: 'absolute',
+          background: 'linear-gradient(white,#9EEBCF,white)'
+        }}
+      ></section>
+      <ul className="list pl0 w5 mh4">
+        <li className="flex">
+          <section className="h2 br-pill bg-green flex items-center ma2 pa2">
+            <p>{Eligibility}</p>
+          </section>
         </li>
-        <li>
-          <p>Time:{time_eligibility_reason}</p>
+        <li className="flex">
+          <p className="b">Time:</p>
+          <p>{time_eligibility_reason}</p>
         </li>
-        <li>
-          <p>Type:{type_eligibility_reason}</p>
+        <li className="flex">
+          <p className="b">Type:</p>
+          <p>{type_eligibility_reason}</p>
         </li>
       </ul>
 
       <ul className="list pl0">
-        <li>
+        <li className="flex">
+          <p className="b">Charge:</p>
           <p>
-            Charge:{statue}-{name}
+            {statue}-{name}
           </p>
         </li>
-        <li>
-          <p>Disposition:{disposition.ruling}</p>
+        <li className="flex">
+          <p className="b">Disposition:</p>
+          <p>{disposition.ruling}</p>
         </li>
-        <li>
+        <li className="flex">
           {disposition.ruling === 'Convicted' ? (
-            <p>Convicted:{disposition.date}</p>
+            <>
+              <p className="b">Convicted:</p>
+              {disposition.date}
+              <p></p>
+            </>
           ) : (
-            <p>Arrested:{disposition.date}</p>
+            <>
+              <p className="b">Arrested:</p>
+              {disposition.date}
+              <p></p>
+            </>
           )}
         </li>
-        <li>
-          <p>Case:{caseId}</p>
+        <li className="flex">
+          <p className="b">Case:</p>
+          <p>{caseId}</p>
         </li>
-        <li>
-          <p>CaseBalance:{caseBalance}</p>
+        <li className="flex">
+          <p className="b">CaseBalance:</p>
+          <p>{caseBalance}</p>
         </li>
       </ul>
     </section>
