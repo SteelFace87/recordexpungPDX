@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
   records: recordsReducer
 });
 
-const store = configureStore({ reducer: rootReducer });
+const store = configureStore({ reducer: { rootReducer } });
 
 export type AppState = ReturnType<typeof rootReducer>;
 

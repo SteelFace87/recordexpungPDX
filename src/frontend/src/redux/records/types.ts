@@ -23,15 +23,25 @@ export interface Record {
 }
 
 export interface RecordsState {
-  records: Record[];
+  loading: boolean;
+  records: any;
+  error: any;
 }
 
 // These constants are used as the 'type' field in Redux actions.
 export const LOAD_RECORDS = 'LOAD_RECORDS';
+export const LOAD_RECORDS_LOADING = 'LOAD_RECORDS_LOADING';
+export const LOAD_RECORDS_ERROR = 'LOAD_RECORDS_ERROR';
 
 interface LoadRecordsAction {
-  type: typeof LOAD_RECORDS;
-  records: Record[];
+  //since the payload can be a type Record[] or a string(error), the type of records
+  // in RecordsState needs to be any.  From my research TypeScript doesn't support
+  // conditional checks on if the payload is of type string or array.  see eample
+  //EXAMPLE(doesn't work with TS) records: typeof(action.payload) === typeof([]) ? action.payload :  []
+  //same applies to error type of any in RecordsState -By Olli
+
+  type: string;
+  payload: Record[] | string;
 }
 
 // Add other Action types here like so:

@@ -59,6 +59,7 @@ export const Record: React.FC<RecordProps> = ({
         </li>
         <li className="flex">
           <p className="b">Time:</p>
+          <p>logo</p>
           <p>{time_eligibility_reason}</p>
         </li>
         <li className="flex">
